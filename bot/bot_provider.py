@@ -1,17 +1,12 @@
-from telegram.ext import CommandHandler, CallbackContext
-from telegram import Update
-
-from base_bot import TelegramBot
+from bot.base_bot import TelegramBot
+from bot.handlers.commands import CommandsHandler
 
 
-class CommandsHandler(TelegramBot):
-    def __init__(self, dispatcher):
-        super(CommandsHandler, self).__init__()
-        self.dispatcher = dispatcher
+class ExchangeRateBotProvider(TelegramBot):
+    def __init__(self):
+        super(ExchangeRateBotProvider, self).__init__()
+        self.dispatcher = self.updater.dispatcher
         self.add_handlers()
 
     def add_handlers(self):
-        self.dispatcher.add_handler(CommandHandler('start', self.start))
-
-    def start(self, update: Update, context: CallbackContext):
-        pass
+        CommandsHandler(self.dispatcher)
