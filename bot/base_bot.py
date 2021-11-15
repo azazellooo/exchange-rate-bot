@@ -13,7 +13,6 @@ class TelegramBot:
     def start_webhook(self):
         url = f'{LISTEN_WEBHOOK}/{TOKEN}'
         self.updater.start_webhook(listen='0.0.0.0', port=WEBHOOK_PORT, url_path=TOKEN,  webhook_url=url)
-        self.updater.bot.set_webhook(url)
 
     def send_message(self, recipient, message, keyboard=None, parse_mode=None, *args):
         self.bot.send_message(chat_id=recipient, text=message, reply_markup=keyboard, parse_mode=parse_mode)
