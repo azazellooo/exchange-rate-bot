@@ -10,6 +10,9 @@ class ApiSource:
 
 
 class ExchangeRateApiSource(ApiSource):
+    def __init__(self, base_url):
+        super(ExchangeRateApiSource, self).__init__(base_url)
+        self.allowed_currencies = self.make_request('latest').get('rates')
 
     def get_latest_info(self):
         data = self.make_request('latest?base=USD')

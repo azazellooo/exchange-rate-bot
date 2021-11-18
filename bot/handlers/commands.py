@@ -32,6 +32,9 @@ class ConversationsHandler(TelegramBot):
 
     def from_currency(self, update: Update, context: CallbackContext):
         from_currency = update.message.text.upper()
+        if not self.source.allowed_currencies.get(from_currency):
+            update.message.reply_text('no such currency code, try again: ')
+            return FROM_CURRENCY
         context.user_data['from_curr'] = from_currency
         update.message.reply_text('send me second alphabetic currency code: ')
         print(context.user_data)
@@ -39,16 +42,22 @@ class ConversationsHandler(TelegramBot):
 
     def to_currency(self, update: Update, context: CallbackContext):
         to_currency = update.message.text.upper()
+        if not self.source.allowed_currencies.get(to_currency):
+            update.message.reply_text('no such currency, try again: ')
+            return TO_CURRENCY
         context.user_data['to_curr'] = to_currency
         update.message.reply_text('amount?')
         return AMOUNT
 
     def amount(self, update: Update, context: CallbackContext):
-        amount = int(update.message.text)
+        amount = update.message.text
+        if not amount.isdigit():
+            update.message.reply_text('please, send me number ')
+            return AMOUNT
         result = self.source.convert_currency(
             curr_from=context.user_data.get('from_curr'),
             curr_to=context.user_data.get('to_curr'),
-            amount=amount
+            amount=int(amount)
         )
         update.message.reply_text(result)
         return ConversationHandler.END
