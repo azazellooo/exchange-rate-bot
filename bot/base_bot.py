@@ -1,7 +1,9 @@
 from telegram import Bot
 from telegram.ext import Updater
 from telegram.utils.request import Request
-from settings import TOKEN, LISTEN_WEBHOOK, WEBHOOK_PORT
+
+from bot.sources import ExchangeRateApiSource
+from settings import TOKEN, LISTEN_WEBHOOK, WEBHOOK_PORT, SOURCE_URL_BASE
 
 
 class TelegramBot:
@@ -9,6 +11,7 @@ class TelegramBot:
         self.request = Request(con_pool_size=9, read_timeout=1.0, connect_timeout=0.5)
         self.bot = Bot(request=self.request, token=TOKEN)
         self.updater = Updater(bot=self.bot, use_context=True)
+        self.source = ExchangeRateApiSource(base_url=SOURCE_URL_BASE)
 
     def start_webhook(self):
         url = f'{LISTEN_WEBHOOK}/{TOKEN}'

@@ -1,5 +1,5 @@
 from bot.base_bot import TelegramBot
-from bot.handlers.commands import CommandsHandler
+from bot.handlers.commands import CommandsHandler, ConversationsHandler
 
 
 class ExchangeRateBotProvider(TelegramBot):
@@ -10,3 +10,4 @@ class ExchangeRateBotProvider(TelegramBot):
 
     def add_handlers(self):
         CommandsHandler(self.dispatcher)
+        ConversationsHandler(self.dispatcher)
