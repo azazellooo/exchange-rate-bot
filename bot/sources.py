@@ -18,3 +18,11 @@ class ExchangeRateApiSource(ApiSource):
             for rate, amount in data.get('rates').items():
                 latest_info += f'{rate}: {amount} \n'
         return latest_info
+
+    def convert_currency(self, curr_from, curr_to, amount=1):
+        data = self.make_request(f'convert?from={curr_from}&to={curr_to}&amount={amount}')
+        response = ''
+        if data.get('success'):
+            result = data.get('result')
+            response += f'{amount} {curr_from} = {result} {curr_to}'
+        return response
