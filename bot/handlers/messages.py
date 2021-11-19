@@ -4,4 +4,5 @@ GREETING = (
     "Here some commands I can complete:"
     "\n/latest - get latest rates of dollar;"
     "\n/convert - convert from one currency to another"
+    "\n/crypto - to get latest cryptocurrency rate in USD, EUR, RUB, KGS"
 )
