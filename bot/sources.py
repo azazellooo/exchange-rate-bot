@@ -13,6 +13,7 @@ class ExchangeRateApiSource(ApiSource):
     def __init__(self, base_url):
         super(ExchangeRateApiSource, self).__init__(base_url)
         self.allowed_currencies = self.make_request('latest').get('rates')
+        self.allowed_cryptos = self.make_request('latest?source=crypto').get('rates')
 
     def get_latest_info(self):
         data = self.make_request('latest?base=USD')
@@ -29,3 +30,12 @@ class ExchangeRateApiSource(ApiSource):
             result = data.get('result')
             response += f'{amount} {curr_from} = {result} {curr_to}'
         return response
+
+    def get_latest_crypto_rate(self, crypto):
+        data = self.make_request(f'latest?source=crypto&symbols=USD,EUR,RUB,KGS&base={crypto}')
+        response = ''
+        if data.get('success'):
+            for key, value in data.get('rates').items():
+                response += f'{key}: {value}\n'
+        return response
+
