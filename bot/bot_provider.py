@@ -1,5 +1,6 @@
 from bot.base_bot import TelegramBot
-from bot.handlers.commands import CommandsHandler, ConversationsHandler
+from bot.handlers.commands import CommandsHandler
+from bot.handlers.conversations import ConversationsHandler
 
 
 class ExchangeRateBotProvider(TelegramBot):
